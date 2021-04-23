@@ -1,0 +1,48 @@
+<mat-accordion>
+
+    <mat-expansion-panel style="pointer-events: none;" hideToggle>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Home
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Oxygen Support
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-selection-list #shoes [multiple]="false">
+            <mat-list-option>Hospitals</mat-list-option>
+            <mat-list-option>Shops</mat-list-option>
+            <mat-list-option>Misc.</mat-list-option>
+        </mat-selection-list>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Hospital Support
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-selection-list #shoes [multiple]="false">
+            <mat-list-option>Beds</mat-list-option>
+            <mat-list-option>Misc.</mat-list-option>
+        </mat-selection-list>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Medicine Support
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-selection-list #shoes [multiple]="false">
+            <mat-list-option>Remdesivir</mat-list-option>
+            <mat-list-option>Misc.</mat-list-option>
+        </mat-selection-list>
+    </mat-expansion-panel>
+
+</mat-accordion>

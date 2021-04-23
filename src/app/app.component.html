@@ -1,12 +1,9 @@
 <!-- <router-outlet></router-outlet> -->
 
 <mat-drawer-container autosize style="min-height:100vh;">
-  <mat-drawer #drawer mode="side">
-    <p>Auto-resizing sidenav</p>
-    <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
-    <button (click)="showFiller = !showFiller" mat-raised-button>
-      Toggle extra text
-    </button>
+
+  <mat-drawer #drawer mode="side" style="min-width: 70vw;">
+    <app-side-menu-options></app-side-menu-options>
   </mat-drawer>
 
   <div class="sidenav-content">
