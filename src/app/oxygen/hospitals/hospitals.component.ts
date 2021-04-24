@@ -36,6 +36,23 @@ export class HospitalsComponent implements OnInit {
     this._bottomSheet.open(BottomSheetAddOxyHospital);
   }
 
+  downVote(id: string) {
+    this._fireServer.postDownvote('covidata/oxygen/hospital', id).then(res => {
+      console.log(res)
+    })
+  }
+  upVote(id: string) {
+    this._fireServer.postUpvote('covidata/oxygen/hospital', id).then(res => {
+      console.log(res)
+    })
+  }
+
+  getBgColor(up: number, down: number) {
+    var g = ((up+down)/up)*255
+    var b = ((up+down)/up)*255
+    return `rgb(255,${g},${b})`
+  }
+
 }
 @Component({
   selector: 'bottom-sheet-oxy-hospital',
