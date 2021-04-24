@@ -10,25 +10,29 @@ export class HomeParentComponent implements OnInit {
 
   constructor(private _apiService: ApiService) { }
 
-  worldActive = 0
-  indiaTotalCases = 0
-
   ngOnInit(): void {
     this.getWorldData();
     this.getIndiaData();
   }
 
+  worldTotalCases = 0
+  worldActiveCases = 0
+  indiaTotalCases = 0
+  indiaActiveCases = 0
+
   getWorldData() {
     this._apiService.getTotalWorldCases().subscribe(res => {
       console.log(res)
-      this.worldActive = res['cases']
+      this.worldTotalCases = res['cases']
+      this.worldActiveCases = res['active']
     })
   }
 
-  getIndiaData(){
-    this._apiService.getIndiaData().subscribe(res =>{
+  getIndiaData() {
+    this._apiService.getIndiaData().subscribe(res => {
       console.log(res)
       this.indiaTotalCases = res['cases']
+      this.indiaActiveCases = res['active']
     })
   }
 

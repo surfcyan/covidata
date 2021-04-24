@@ -1,0 +1,38 @@
+<div style="padding: 24px 4px;">
+
+    <form class="form">
+
+        <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Hospital Name</mat-label>
+            <input type="text" matInput placeholder="Ex. Max Hospital">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Oxygen Beds Available</mat-label>
+            <input type="number" matInput placeholder="Ex. 10, 23">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Select State</mat-label>
+            <mat-select>
+                <mat-option value="0">State</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Select City</mat-label>
+            <mat-select>
+                <mat-option value="0">City</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <div style="display:flex;">
+            <button mat-raised-button color="primary" type="submit">Add Record</button>
+            <span style="flex: 0.1;"></span>
+            <button mat-raised-button color="warn" type="submit">Cancel</button>
+            <span style="flex: 1;"></span>
+        </div>
+
+    </form>
+
+</div>

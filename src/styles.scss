@@ -45,6 +45,25 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
   background-color: #1b1b1b;
 }
-*{
-  outline: none!important;
+* {
+  outline: none !important;
+}
+.floating-action-btn {
+  position: fixed;
+  right: 16px;
+  bottom: 24px;
+}
+.full-width {
+  width: 100%;
+}
+.nil-margin {
+  margin: 0;
+}
+.up-vote {
+  transform: rotate(-90deg);
+  color: green;
+}
+.down-vote {
+  transform: rotate(90deg);
+  color: red;
 }

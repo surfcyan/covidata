@@ -21,6 +21,16 @@ import { HomeParentComponent } from './home/home-parent/home-parent.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { ApiService } from './service/api.service';
 import { HttpClientModule } from '@angular/common/http';
+import { BottomSheetAddOxyHospital, HospitalsComponent } from './oxygen/hospitals/hospitals.component';
+import { ShopsComponent } from './oxygen/shops/shops.component';
+import { MiscComponent } from './oxygen/misc/misc.component';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatRippleModule } from '@angular/material/core';
+import { ComingSoonComponent } from './coming-soon/coming-soon.component';
+
 
 @NgModule({
   declarations: [
@@ -28,7 +38,12 @@ import { HttpClientModule } from '@angular/common/http';
     HeaderComponent,
     NavbarComponent,
     SideMenuOptionsComponent,
-    HomeParentComponent
+    HomeParentComponent,
+    HospitalsComponent,
+    ShopsComponent,
+    MiscComponent,
+    BottomSheetAddOxyHospital,
+    ComingSoonComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,6 +64,11 @@ import { HttpClientModule } from '@angular/common/http';
     MatCardModule,
     MDBBootstrapModule.forRoot(),
     HttpClientModule,
+    MatBottomSheetModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatSelectModule,
+    MatRippleModule,
   ],
   providers: [
     ApiService,
