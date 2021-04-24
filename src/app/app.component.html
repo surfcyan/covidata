@@ -8,9 +8,7 @@
 
   <div class="sidenav-content">
     <app-header (newItemEvent)="addItem()"></app-header>
-    <button type="button" mat-button (click)="drawer.toggle()">
-      Toggle sidenav
-    </button>
+    <router-outlet></router-outlet>
   </div>
 
 </mat-drawer-container>

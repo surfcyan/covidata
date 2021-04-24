@@ -16,13 +16,19 @@ import { MatButtonModule } from '@angular/material/button';
 import { SideMenuOptionsComponent } from './side-menu-options/side-menu-options.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatListModule } from '@angular/material/list';
+import { MatCardModule } from '@angular/material/card';
+import { HomeParentComponent } from './home/home-parent/home-parent.component';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { ApiService } from './service/api.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     NavbarComponent,
-    SideMenuOptionsComponent
+    SideMenuOptionsComponent,
+    HomeParentComponent
   ],
   imports: [
     BrowserModule,
@@ -40,8 +46,13 @@ import { MatListModule } from '@angular/material/list';
     MatButtonModule,
     MatExpansionModule,
     MatListModule,
+    MatCardModule,
+    MDBBootstrapModule.forRoot(),
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    ApiService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
