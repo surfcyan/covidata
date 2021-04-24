@@ -30,6 +30,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRippleModule } from '@angular/material/core';
 import { ComingSoonComponent } from './coming-soon/coming-soon.component';
+import { FireServerService } from './service/fire-server.service';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 
 @NgModule({
@@ -69,9 +72,12 @@ import { ComingSoonComponent } from './coming-soon/coming-soon.component';
     MatInputModule,
     MatSelectModule,
     MatRippleModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
   ],
   providers: [
     ApiService,
+    FireServerService,
   ],
   bootstrap: [AppComponent]
 })
