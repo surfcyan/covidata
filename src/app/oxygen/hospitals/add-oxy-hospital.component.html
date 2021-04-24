@@ -1,28 +1,28 @@
 <div style="padding: 24px 4px;">
 
-    <form class="form">
+    <form class="form" (ngSubmit)="submit()" [formGroup]="formDet">
 
         <mat-form-field appearance="fill" class="full-width">
             <mat-label>Hospital Name</mat-label>
-            <input type="text" matInput placeholder="Ex. Max Hospital">
+            <input type="text" matInput placeholder="Ex. Max Hospital" formControlName="hosp_name">
         </mat-form-field>
 
         <mat-form-field appearance="fill" class="full-width">
             <mat-label>Oxygen Beds Available</mat-label>
-            <input type="number" matInput placeholder="Ex. 10, 23">
+            <input type="number" matInput placeholder="Ex. 10, 23" formControlName="beds">
         </mat-form-field>
 
         <mat-form-field appearance="fill" class="full-width">
             <mat-label>Select State</mat-label>
-            <mat-select>
-                <mat-option value="0">State</mat-option>
+            <mat-select (selectionChange)="stateChanged($event)" formControlName="state">
+                <mat-option value="{{e.state}}" *ngFor="let e of states">{{e.state}}</mat-option>
             </mat-select>
         </mat-form-field>
 
         <mat-form-field appearance="fill" class="full-width">
             <mat-label>Select City</mat-label>
-            <mat-select>
-                <mat-option value="0">City</mat-option>
+            <mat-select formControlName="city">
+                <mat-option *ngFor="let e of cities" value="{{e.name}}">{{e.name}}</mat-option>
             </mat-select>
         </mat-form-field>
 

@@ -17,4 +17,8 @@ export class ApiService {
     return this._http.get('https://corona.lmao.ninja/v2/countries/Italy?yesterday&strict&query%20')
   }
 
+  getStates(): Observable<any> {
+    return this._http.get('../assets/statesNDcities.json')
+  }
+
 }
