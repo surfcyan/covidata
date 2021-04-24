@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { MatBottomSheet, MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import * as moment from 'moment';
 import { oxyHospital } from 'src/app/models/oxygen.models';
 import { ApiService } from 'src/app/service/api.service';
@@ -33,7 +33,7 @@ export class HospitalsComponent implements OnInit {
   // { hospitalName: 'Max Hospital', beds: 24, update_datestamp: '24 May 2021', update_timestamp: '3:02AM' },
 
   addOxyHospital(): void {
-    this._bottomSheet.open(BottomSheetAddOxyHospital);
+    this._bottomSheet.open(BottomSheetAddOxyHospital, { data: { edit: false } });
   }
 
   downVote(id: string) {
@@ -48,9 +48,13 @@ export class HospitalsComponent implements OnInit {
   }
 
   getBgColor(up: number, down: number) {
-    var g = ((up+down)/up)*255
-    var b = ((up+down)/up)*255
+    var g = ((up + down) / up) * 255
+    var b = ((up + down) / up) * 255
     return `rgb(255,${g},${b})`
+  }
+
+  editEntry(item: any) {
+    this._bottomSheet.open(BottomSheetAddOxyHospital, { data: { edit: true, meta: item } });
   }
 
 }
@@ -59,8 +63,15 @@ export class HospitalsComponent implements OnInit {
   templateUrl: 'add-oxy-hospital.component.html',
 })
 export class BottomSheetAddOxyHospital {
-  constructor(private _bottomSheetRef: MatBottomSheetRef<BottomSheetAddOxyHospital>, private _apiService: ApiService, private _fireServer: FireServerService) { }
+  constructor(private _bottomSheetRef: MatBottomSheetRef<BottomSheetAddOxyHospital>, @Inject(MAT_BOTTOM_SHEET_DATA) public data: any, private _apiService: ApiService, private _fireServer: FireServerService) {
+    console.log(data)
+    if (data.edit) {
+      this.editing = true;
+      this.formDet.patchValue({ hosp_name: data.meta.hospitalName })
+    }
+  }
 
+  editing = false;
   states: any[] = []
   cities: any[] = []
   formDet = new FormGroup({
@@ -107,6 +118,9 @@ export class BottomSheetAddOxyHospital {
     this._fireServer.postNewValue('covidata/oxygen/hospital', obj).then(res => {
       console.log(res)
     })
+  }
+  close() {
+    this._bottomSheetRef.dismiss()
   }
 
 }

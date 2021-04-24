@@ -1,7 +1,8 @@
 <div class="bg-container">
 
-    <mat-card class="custom-card" *ngFor="let item of dataList" [ngStyle]="{'background-color':getBgColor(item.upvote,item.downvote)}">
-        <h2>{{item.hospitalName}}</h2>
+    <mat-card class="custom-card" *ngFor="let item of dataList" [ngStyle]="{'background-color':getBgColor(item.upvote,item.downvote)}" (click)="editEntry(item)">
+        <h2> <strong> {{item.hospitalName}}</strong></h2>
+        <h5>{{item.city}}, {{item.state}}</h5>
         <p class="nil-margin"><b>{{item.beds}}</b> Beds Available</p>
         <p class="nil-margin"><b>Last Updated:</b> {{item.date}} at {{item.time}}</p>
         <div style="display:flex;">
