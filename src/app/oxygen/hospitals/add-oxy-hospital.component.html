@@ -1,5 +1,8 @@
 <div style="padding: 24px 4px;">
 
+    <h3 *ngIf="editing">Edit Number of Beds</h3>
+    <h3 *ngIf="!editing">Add New Hospital Beds Details</h3>
+
     <form class="form" (ngSubmit)="submit()" [formGroup]="formDet">
 
         <mat-form-field appearance="fill" class="full-width">

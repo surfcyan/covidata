@@ -21,7 +21,7 @@ import { HomeParentComponent } from './home/home-parent/home-parent.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { ApiService } from './service/api.service';
 import { HttpClientModule } from '@angular/common/http';
-import { BottomSheetAddOxyHospital, HospitalsComponent } from './oxygen/hospitals/hospitals.component';
+import { BottomSheetAddOxyHospital, BottomSheetApplyFilter, HospitalsComponent } from './oxygen/hospitals/hospitals.component';
 import { ShopsComponent } from './oxygen/shops/shops.component';
 import { MiscComponent } from './oxygen/misc/misc.component';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
@@ -47,6 +47,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
     MiscComponent,
     BottomSheetAddOxyHospital,
     ComingSoonComponent,
+    BottomSheetApplyFilter,
   ],
   imports: [
     BrowserModule,

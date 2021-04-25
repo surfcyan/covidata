@@ -1,0 +1,35 @@
+<div>
+
+    <h3>Choose Filter Options</h3>
+
+    <form>
+
+        <mat-form-field class="full-width" appearance="fill">
+            <mat-label>Search Keyword</mat-label>
+            <input matInput placeholder="Ex. AIIMS">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Select State</mat-label>
+            <mat-select (selectionChange)="stateChanged($event)" formControlName="state">
+                <mat-option value="{{e.state}}" *ngFor="let e of states">{{e.state}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Select City</mat-label>
+            <mat-select formControlName="city">
+                <mat-option *ngFor="let e of cities" value="{{e.name}}">{{e.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <div style="display:flex;">
+            <button mat-flat-button color="primary" type="submit">APPLY</button>
+            <span style="flex: .1;"></span>
+            <button mat-flat-button color="warn" type="reset">CANCEL</button>
+            <span style="flex: 1;"></span>
+        </div>
+
+    </form>
+
+</div>

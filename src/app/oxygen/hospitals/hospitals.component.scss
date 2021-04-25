@@ -8,3 +8,15 @@
     padding: 8px;
 }
 
+.tool-menu {
+    width: 100%;
+    padding: 0 16px;
+    display: flex;
+}
+.tool-menu mat-icon{
+    font-size: 24px;
+    color: white;
+}
+.tool-menu button{
+    background-color: transparent;
+}

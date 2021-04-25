@@ -57,6 +57,10 @@ export class HospitalsComponent implements OnInit {
     this._bottomSheet.open(BottomSheetAddOxyHospital, { data: { edit: true, meta: item } });
   }
 
+  openFilterSheet() {
+    this._bottomSheet.open(BottomSheetApplyFilter);
+  }
+
 }
 @Component({
   selector: 'bottom-sheet-oxy-hospital',
@@ -132,6 +136,37 @@ export class BottomSheetAddOxyHospital {
   }
   close() {
     this._bottomSheetRef.dismiss()
+  }
+
+}
+
+@Component({
+  selector: 'bottom-sheet-filter',
+  templateUrl: 'apply-filter.component.html',
+})
+export class BottomSheetApplyFilter {
+
+  constructor(private _bottomSheetRef: MatBottomSheetRef<BottomSheetApplyFilter>, @Inject(MAT_BOTTOM_SHEET_DATA) public data: any, private _apiService: ApiService, private _fireServer: FireServerService) {
+    console.log(data)
+  }
+
+  ngOnInit() {
+    this._apiService.getStates().subscribe(res => {
+      for (const e in res['states']) {
+        this.states.push({ state: res['states'][e]['name'], cities: res['states'][e]['districts'] })
+      }
+    })
+  }
+
+  states: any[] = []
+  cities: any[] = []
+
+  stateChanged(e: any) {
+    this.cities = []
+    for (const r in this.states)
+      if (this.states[r].state == e.value)
+        for (const i in this.states[r].cities)
+          this.cities.push(this.states[r].cities[i])
   }
 
 }
