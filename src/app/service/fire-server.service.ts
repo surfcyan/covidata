@@ -34,5 +34,14 @@ export class FireServerService {
       beds: obj.beds
     })
   }
+  getOxyHospitalByKeyword(addr: string, keyword: string): Observable<any> {
+    return this._fireStore.collection<any>(addr, ref => ref.orderBy('hospitalName_no_case').where('hospitalName_no_case', '>=', keyword.toLowerCase())).valueChanges();
+  }
+  getOxyHospitalByState(addr: string, state: string): Observable<any> {
+    return this._fireStore.collection<any>(addr, ref => ref.where('state', '==', state)).valueChanges();
+  }
+  getOxyHospitalByCity(addr: string, state: string, city: string): Observable<any> {
+    return this._fireStore.collection<any>(addr, ref => ref.where('state', '==', state).where('city', '==', city)).valueChanges();
+  }
 
 }

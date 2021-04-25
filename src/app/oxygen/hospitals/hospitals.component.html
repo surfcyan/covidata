@@ -1,8 +1,9 @@
 <div class="custom-primary tool-menu">
 
-    <!-- <button mat-flat-button>
-        <mat-icon inline>search</mat-icon>
-    </button> -->
+    <button mat-flat-button (click)="enableMessageScreen(true,'Filters Removed');ngOnInit();" *ngIf="filterApplied">
+        <span style="color:white; font-weight: 200;">RESET</span>
+        <mat-icon inline>clear</mat-icon>
+    </button>
     <span style="flex:1;"></span>
     <button mat-flat-button (click)="openFilterSheet()">
         <span style="color:white; font-weight: 200;">APPLY FILTERS</span>
@@ -11,7 +12,16 @@
 
 </div>
 
-<div class="bg-container">
+<div style="display: flex; flex-direction:column; height: 80vh;" *ngIf="showMessage">
+    <span style="flex: 1;"></span>
+    <div>
+        <!-- <h2 style="text-align:center; font-weight: 900;">Coming Soon</h2> -->
+        <h5 style="text-align:center;">{{message}}</h5>
+    </div>
+    <span style="flex: 1;"></span>
+</div>
+
+<div class="bg-container" *ngIf="!showMessage">
 
     <mat-card class="custom-card" *ngFor="let item of dataList"
         [ngStyle]="{'background-color':getBgColor(item.upvote,item.downvote)}" (click)="editEntry(item)">

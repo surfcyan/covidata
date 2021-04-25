@@ -1,6 +1,7 @@
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatBottomSheet, MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import * as moment from 'moment';
 import { oxyHospital } from 'src/app/models/oxygen.models';
 import { ApiService } from 'src/app/service/api.service';
@@ -14,9 +15,11 @@ import * as uuid from 'uuid';
 })
 export class HospitalsComponent implements OnInit {
 
-  constructor(private _bottomSheet: MatBottomSheet, private _fireServer: FireServerService) { }
+  constructor(private _bottomSheet: MatBottomSheet, private _fireServer: FireServerService, private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
+    this.filterApplied = false;
+    this.enableMessageScreen(false);
     this._fireServer.getValue('covidata/oxygen/hospital').subscribe(res => {
       this.dataList = []
       for (const e in res) {
@@ -29,6 +32,9 @@ export class HospitalsComponent implements OnInit {
   }
 
   dataList: any[] = []
+  showMessage: boolean = false;
+  message: string = '';
+  filterApplied: boolean = false;
 
   // { hospitalName: 'Max Hospital', beds: 24, update_datestamp: '24 May 2021', update_timestamp: '3:02AM' },
 
@@ -58,7 +64,29 @@ export class HospitalsComponent implements OnInit {
   }
 
   openFilterSheet() {
-    this._bottomSheet.open(BottomSheetApplyFilter);
+    const btSheetRef = this._bottomSheet.open(BottomSheetApplyFilter, { data: { description: 'data field' } });
+    btSheetRef.afterDismissed().subscribe(res => {
+      if (res) {
+        this.dataList = [];
+        this.filterApplied = true;
+        for (const e in res)
+          this.dataList.push(res[e])
+        if (this.dataList.length == 0)
+          this.enableMessageScreen(true, 'Sorry, No Results Found!');
+      }
+
+    })
+  }
+
+  enableMessageScreen(bool: boolean, msg: string = '') {
+    this.showMessage = bool;
+    this.message = msg
+    if (msg)
+      this.openSnackBar(msg)
+  }
+
+  openSnackBar(msg: string, btn: string = 'Done') {
+    this._snackBar.open(msg, btn)
   }
 
 }
@@ -114,6 +142,7 @@ export class BottomSheetAddOxyHospital {
       var obj = {
         id: uuid.v4(),
         hospitalName: this.formDet.value.hosp_name,
+        hospitalName_no_case: (this.formDet.value.hosp_name).toLowerCase(),
         beds: this.formDet.value.beds,
         downvote: 0,
         upvote: 0,
@@ -146,7 +175,10 @@ export class BottomSheetAddOxyHospital {
 })
 export class BottomSheetApplyFilter {
 
-  constructor(private _bottomSheetRef: MatBottomSheetRef<BottomSheetApplyFilter>, @Inject(MAT_BOTTOM_SHEET_DATA) public data: any, private _apiService: ApiService, private _fireServer: FireServerService) {
+  constructor(private _bottomSheetRef: MatBottomSheetRef<BottomSheetApplyFilter>,
+    @Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
+    private _apiService: ApiService,
+    private _fireServer: FireServerService) {
     console.log(data)
   }
 
@@ -160,6 +192,11 @@ export class BottomSheetApplyFilter {
 
   states: any[] = []
   cities: any[] = []
+  formDet = new FormGroup({
+    keyword: new FormControl(''),
+    state: new FormControl(''),
+    city: new FormControl(''),
+  })
 
   stateChanged(e: any) {
     this.cities = []
@@ -167,6 +204,40 @@ export class BottomSheetApplyFilter {
       if (this.states[r].state == e.value)
         for (const i in this.states[r].cities)
           this.cities.push(this.states[r].cities[i])
+  }
+
+  submit() {
+    var list: any = []
+
+    // this._fireServer.getOxyHospitalByKeyword('covidata/oxygen/hospital', this.formDet.value.keyword).subscribe(resp => {
+    //   list = []
+    //   console.log(resp)
+    //   for (const e in resp)
+    //     list.push(resp[e])
+    //   console.log('list', list)
+    //   this._bottomSheetRef.dismiss(list)
+    // })
+
+    if (this.formDet.value.city == '' && this.formDet.value.state != '')
+      this._fireServer.getOxyHospitalByState('covidata/oxygen/hospital', this.formDet.value.state).subscribe(resp => {
+        list = []
+        for (const e in resp)
+          list.push(resp[e])
+        this._bottomSheetRef.dismiss(list)
+      })
+
+    if (this.formDet.value.city != '' && this.formDet.value.state != '')
+      this._fireServer.getOxyHospitalByCity('covidata/oxygen/hospital', this.formDet.value.state, this.formDet.value.city).subscribe(resp => {
+        list = []
+        for (const e in resp)
+          list.push(resp[e])
+        this._bottomSheetRef.dismiss(list)
+      })
+
+  }
+
+  close() {
+    this._bottomSheetRef.dismiss()
   }
 
 }

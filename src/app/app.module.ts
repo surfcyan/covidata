@@ -33,7 +33,7 @@ import { ComingSoonComponent } from './coming-soon/coming-soon.component';
 import { FireServerService } from './service/fire-server.service';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
-
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -75,6 +75,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
     MatRippleModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
+    MatSnackBarModule,
   ],
   providers: [
     ApiService,
