@@ -12,7 +12,7 @@ export class FireServerService {
   constructor(private _fireStore: AngularFirestore) { }
 
   getValue(addr: string): Observable<any> {
-    return this._fireStore.collection(addr).valueChanges();
+    return this._fireStore.collection<any>(addr, ref => ref.orderBy('update_timestamp', 'desc')).valueChanges();
   }
 
   postNewValue(addr: string, obj: any) {
