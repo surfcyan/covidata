@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatBottomSheet, MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import * as moment from 'moment';
@@ -66,11 +66,13 @@ export class BottomSheetAddOxyHospital {
   constructor(private _bottomSheetRef: MatBottomSheetRef<BottomSheetAddOxyHospital>, @Inject(MAT_BOTTOM_SHEET_DATA) public data: any, private _apiService: ApiService, private _fireServer: FireServerService) {
     console.log(data)
     if (data.edit) {
+      this.DATA = data['meta']
       this.editing = true;
       this.formDet.patchValue({ hosp_name: data.meta.hospitalName })
     }
   }
 
+  DATA: any;
   editing = false;
   states: any[] = []
   cities: any[] = []
@@ -104,20 +106,29 @@ export class BottomSheetAddOxyHospital {
 
   submit() {
 
-    var obj = {
-      id: uuid.v4(),
-      hospitalName: this.formDet.value.hosp_name,
-      beds: this.formDet.value.beds,
-      downvote: 0,
-      upvote: 0,
-      update_timestamp: new Date(),
-      state: this.formDet.value.state,
-      city: this.formDet.value.city,
+    if (!this.editing) {
+      var obj = {
+        id: uuid.v4(),
+        hospitalName: this.formDet.value.hosp_name,
+        beds: this.formDet.value.beds,
+        downvote: 0,
+        upvote: 0,
+        update_timestamp: new Date(),
+        state: this.formDet.value.state,
+        city: this.formDet.value.city,
+      }
+      this._fireServer.postNewValue('covidata/oxygen/hospital', obj).then(res => {
+        console.log(res)
+      })
+    } else {
+      var editObj = {
+        id: this.DATA.id,
+        beds: this.formDet.value.beds,
+      }
+      this._fireServer.postOxyHospaUpdate('covidata/oxygen/hospital', editObj).then(res => {
+        console.log(res)
+      })
     }
-
-    this._fireServer.postNewValue('covidata/oxygen/hospital', obj).then(res => {
-      console.log(res)
-    })
   }
   close() {
     this._bottomSheetRef.dismiss()

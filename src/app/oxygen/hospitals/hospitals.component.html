@@ -6,14 +6,14 @@
         <p class="nil-margin"><b>{{item.beds}}</b> Beds Available</p>
         <p class="nil-margin"><b>Last Updated:</b> {{item.date}} at {{item.time}}</p>
         <div style="display:flex;">
-            <div matRipple [matRippleUnbounded]="true" [matRippleRadius]="30" [matRippleCentered]="true"
-                [matRippleColor]="'#0080004a'" (click)="upVote(item.id)">
+            <div #upvote id="upvote" matRipple [matRippleUnbounded]="true" [matRippleRadius]="30" [matRippleCentered]="true"
+                [matRippleColor]="'#0080004a'" (click)="upVote(item.id);$event.stopPropagation()">
                 <mat-icon inline="true" class="up-vote">forward</mat-icon>
                 <span>{{item.upvote}}</span>
             </div>
             <span style="flex:.1"></span>
-            <div matRipple [matRippleUnbounded]="true" [matRippleRadius]="30" [matRippleCentered]="true"
-                [matRippleColor]="'#ff00007d'" (click)="downVote(item.id)">
+            <div #downvote id="downvote" matRipple [matRippleUnbounded]="true" [matRippleRadius]="30" [matRippleCentered]="true"
+                [matRippleColor]="'#ff00007d'" (click)="downVote(item.id);$event.stopPropagation()">
                 <mat-icon inline="true" class="down-vote">forward</mat-icon>
                 <span>{{item.downvote}}</span>
             </div>

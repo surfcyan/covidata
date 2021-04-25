@@ -29,5 +29,10 @@ export class FireServerService {
       downvote: firebase.firestore.FieldValue.increment(-1)
     })
   }
+  postOxyHospaUpdate(addr: string, obj: any) {
+    return this._fireStore.collection(addr).doc(obj.id).update({
+      beds: obj.beds
+    })
+  }
 
 }
