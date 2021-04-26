@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit {
 
   openMenu() {
     this.newItemEvent.emit()
-    this.leftIcon=='menu'?this.leftIcon='arrow_back_ios':this.leftIcon='menu'
+    // this.leftIcon=='menu'?this.leftIcon='arrow_back_ios':this.leftIcon='menu'
   }
 
 }

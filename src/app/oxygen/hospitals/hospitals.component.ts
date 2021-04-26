@@ -28,6 +28,8 @@ export class HospitalsComponent implements OnInit {
         res[e].time = moment(res[e].update_timestamp).format('h:mm a')
         this.dataList.push(res[e])
       }
+      if (this.dataList.length == 0)
+        this.enableMessageScreen(true, 'No Data Yet! Please wait for someone or add yourself')
     })
   }
 
@@ -95,7 +97,11 @@ export class HospitalsComponent implements OnInit {
   templateUrl: 'add-oxy-hospital.component.html',
 })
 export class BottomSheetAddOxyHospital {
-  constructor(private _bottomSheetRef: MatBottomSheetRef<BottomSheetAddOxyHospital>, @Inject(MAT_BOTTOM_SHEET_DATA) public data: any, private _apiService: ApiService, private _fireServer: FireServerService) {
+  constructor(private _bottomSheetRef: MatBottomSheetRef<BottomSheetAddOxyHospital>,
+    @Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
+    private _apiService: ApiService,
+    private _fireServer: FireServerService,
+    private _snackBar: MatSnackBar) {
     console.log(data)
     if (data.edit) {
       this.DATA = data['meta']
@@ -136,7 +142,7 @@ export class BottomSheetAddOxyHospital {
           this.cities.push(this.states[r].cities[i])
   }
 
-  submit() {
+  submit(): any {
 
     if (!this.editing) {
       var obj = {
@@ -150,21 +156,40 @@ export class BottomSheetAddOxyHospital {
         state: this.formDet.value.state,
         city: this.formDet.value.city,
       }
+
+      if (this.formDet.value.hosp_name == '' || this.formDet.value.beds == '' || this.formDet.value.state == '' || this.formDet.value.city == '') {
+        this.openSnackBar('Please Fill All Details!');
+        return 0;
+      }
+
       this._fireServer.postNewValue('covidata/oxygen/hospital', obj).then(res => {
         console.log(res)
+        this.close(true, 'Hospital Added Successfully!')
       })
     } else {
       var editObj = {
         id: this.DATA.id,
         beds: this.formDet.value.beds,
       }
+
+      if (this.formDet.value.beds == '') {
+        this.openSnackBar('Please Fill All Details!');
+        return 0;
+      }
+
       this._fireServer.postOxyHospaUpdate('covidata/oxygen/hospital', editObj).then(res => {
         console.log(res)
+        this.close(true, 'Beds Updated Successfully!')
       })
     }
   }
-  close() {
+  close(msgFlag: boolean = false, msg: string = '') {
+    if (msgFlag)
+      this.openSnackBar(msg)
     this._bottomSheetRef.dismiss()
+  }
+  openSnackBar(msg: string, btn: string = 'Done') {
+    this._snackBar.open(msg, btn)
   }
 
 }

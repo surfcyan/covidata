@@ -34,6 +34,7 @@ import { FireServerService } from './service/fire-server.service';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
 
 @NgModule({
   declarations: [
@@ -76,6 +77,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     MatSnackBarModule,
+    AngularFireAnalyticsModule,
   ],
   providers: [
     ApiService,

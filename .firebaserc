@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "covidata-72c74"
+  },
+  "targets": {
+    "covidata-72c74": {
+      "hosting": {
+        "main": [
+          "covidbase"
+        ]
+      }
+    }
   }
 }
